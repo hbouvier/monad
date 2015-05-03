@@ -19,7 +19,20 @@ defmodule Option do
   """
   @spec some(any) :: option
   defmacro some(nil), do: quote do: unquote(@none)
-  defmacro some(value), do: quote do: {unquote(@some), unquote(value)}
+  defmacro some(value)  do
+    case value do
+      # {{:., [],  [{:__aliases__, [alias: false], [:Module]}, :function]}, [], ["params"]}
+      {{:., [_|_], [{:__aliases__, [_|_], [_|_]}, atom]}, [_|_], [_|_]} when is_atom(atom) -> quote do
+        case unquote(value) do
+          nil -> unquote(@none)
+          _ -> {unquote(@some), unquote(value)}
+        end
+      end
+      _ -> quote do: {unquote(@some), unquote(value)}
+    end
+  end
+
+  #defmacro some(value), do: quote do: {unquote(@some), unquote(value)}
 
   @doc """
   Test the value is absent (e.g. none).

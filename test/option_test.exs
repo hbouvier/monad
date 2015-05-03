@@ -32,6 +32,10 @@ defmodule OptionTest do
     assert Option.some(nil) == Option.none
   end
 
+  test "Option.some of a function that returns nil behave has none" do
+    assert Option.some(System.get_env("EnViRoNmenTVaria_ble_that_ShoUlD_NoTeXisT")) == Option.none
+  end
+
   test "Option.none is empty?" do
     assert Option.none |> Option.empty? == true
   end
