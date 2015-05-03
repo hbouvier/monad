@@ -22,6 +22,13 @@ defmodule Option do
   defmacro some(value), do: quote do: {unquote(@some), unquote(value)}
 
   @doc """
+  Test the value is absent (e.g. none).
+  """
+  @spec empty?(option) :: boolean
+  def empty?(@none), do: true
+  def empty?({@some, _}), do: false
+
+  @doc """
   Returns the unwrapped value of the option or if no value (e.g.: none) return the default value
   """
   @spec get_or_else(option, any) :: any

@@ -32,6 +32,14 @@ defmodule OptionTest do
     assert Option.some(nil) == Option.none
   end
 
+  test "Option.none is empty?" do
+    assert Option.none |> Option.empty? == true
+  end
+
+  test "Option.some is not empty?" do
+    assert Option.some("value") |> Option.empty? == false
+  end
+
   test "Option.get_or_else of a value return the unwrapped value" do
     option = Option.some("thing")
     assert Option.get_or_else(option, "not this") == "thing"
