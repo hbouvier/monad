@@ -32,6 +32,13 @@ defmodule Option do
   Returns the unwrapped value of the option or if no value (e.g.: none) return the default value
   """
   @spec get_or_else(option, any) :: any
-	def get_or_else(@none , default), do: default
+	def get_or_else(@none, default), do: default
   def get_or_else({@some, value}, _default), do: value
+
+  @doc """
+  Returns the first_option if it is nonempty, otherwise return the next_option
+  """
+  @spec or_else(option, option) :: option
+  def or_else(first_option = {@some, _value}, _next_option), do: first_option
+  def or_else(@none, next_option), do: next_option
 end

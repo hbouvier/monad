@@ -31,6 +31,25 @@ Hello Bob
 :ok
 ```
 
+```bash
+$ export APPLICATION_OPTION="--app rules"
+$ export SYSTEM_DEFAULT_OPTION="--system default"
+$ iex -S mix
+iex(1)> require Monad
+nil
+iex(2)> require Option
+nil
+iex(3)> user = Option.some(System.get_env("USER_OPTION"))
+:none
+iex(4)> application = Option.some(System.get_env("APPLICATION_OPTION"))
+{:some, "--app rules"}
+iex(5)> system = Option.some(System.get_env("SYSTEM_DEFAULT_OPTION"))
+{:some, "--system default"}
+iex(6)> user |> Option.or_else(application) |> Option.or_else(system) |> Monad.get
+"--app rules"
+```
+
+
 ## Either usage
 
 ```iex

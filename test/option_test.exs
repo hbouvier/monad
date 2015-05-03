@@ -51,6 +51,22 @@ defmodule OptionTest do
     catch_error(Option.none |> Monad.get)
   end
 
+  test "Option.or_else of a Some(7) and None returns Some(7)" do
+    assert Option.some(7) |> Option.or_else(Option.none) |> Monad.get == 7
+  end
+
+  test "Option.or_else of Some(1) and Some(2) returns Some(1)" do
+    assert Option.some(1) |> Option.or_else(Option.some(2)) |> Monad.get == 1
+  end
+
+  test "Option.or_else of None and Some(2) returns Some(2)" do
+    assert Option.none |> Option.or_else(Option.some(2)) |> Monad.get == 2
+  end
+
+  test "Option.or_else of None and None returns None" do
+    assert Option.none |> Option.or_else(Option.none) |> Option.empty? == true
+  end
+
   test "Option.map on a value call the transformation function and wrap the result in an Option" do
     assert "something" == Monad.map(Option.some("thing"), fn(value)-> "some#{value}" end) |> Monad.get
   end
