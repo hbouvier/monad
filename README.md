@@ -106,8 +106,17 @@ iex(6)> |> Monad.each(&IO.puts("NOT called, because #{&1} is not left"))
 
 ## Dialyzer
 
-To run dialyzer, install [Dialyxir](https://github.com/jeremyjh/dialyxir Dialyxir) 
+1) Install [Dialyxir](https://github.com/jeremyjh/dialyxir Dialyxir)
 
 ```bash
-mix compile &&  mix dialyzer
+$ cd .../dialyxir
+$ mix archive.build
+$ mix archive.install
+$ mix dialyzer.plt
+```
+
+2) Run dialyzer
+
+```bash
+$ mix compile &&  mix dialyzer
 ```
